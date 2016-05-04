@@ -1,0 +1,23 @@
+[
+	{
+		"name":"Майка красная",
+		"article":"tsr",
+		"barcode":"03123123",
+		"quantity":"50",
+		"price":"5000"
+	},
+	{
+		"name":"Майка синяя",
+		"article":"tsb",
+		"barcode":"12412401",
+		"quantity":"100",
+		"price":"4000"
+	},
+	{
+		"name":"Майка зелёная",
+		"article":"tsg",
+		"barcode":"12491241",
+		"quantity":"30",
+		"price":"2000"
+	}
+]

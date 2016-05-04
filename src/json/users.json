@@ -1,0 +1,26 @@
+[
+	{
+		"login":"admin",
+		"password":"1",
+		"name":"Привалов Виталий Сергеевич",
+		"point":"point 1",
+		"status":0,
+		"rights":0
+	},
+	{
+		"login":"picker",
+		"password":"1",
+		"name":"Воробьёв Иван Васильевич",
+		"point":"point 1",
+		"status":0,
+		"rights":1
+	},
+	{
+		"login":"client",
+		"password":"1",
+		"name":"Паршенцев Владислав Аслексеевич",
+		"point":"point 1",
+		"status":0,
+		"rights":2
+	}
+]
