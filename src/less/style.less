@@ -1,0 +1,33 @@
+body{
+	margin:0;
+	font:14px/1.5em Arial,sans-serif;
+}
+.screen{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#fff;
+	padding-top:50px;
+	display:none;
+	&:target{
+		display:block;
+	}
+}
+.container{
+	max-width:800px;
+	margin:0 auto;
+}
+.stock, .overhead, .users, .requests, .barcodes, .card{
+	border:1px solid #000;
+	border-collapse:collapse;
+	width:100%;
+	height:400px;
+	overflow-y:auto;
+	th,td{
+		border:1px solid #000;
+		vertical-align:middle;
+	}
+	th{
+		text-align:center;
+	}
+}
