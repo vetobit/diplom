@@ -13,10 +13,10 @@
 				Вход
 			</h2>
 			<label for="userLogin">Логин</label>
-			<input type="text" class="input" id="userLogin" placeholder="Логин">
+			<input type="text" class="input" id="userLogin" placeholder="Логин" oninput="obj.user.login=this.value;">
 			<label for="userPassword">Пароль</label>
-			<input type="password" class="input" id="userPassword" placeholder="Пароль">
-			<input type="button" class="button" value="Войти">
+			<input type="password" class="input" id="userPassword" placeholder="Пароль" oninput="obj.user.password=this.value;">
+			<input type="button" class="button" value="Войти" onclick="obj.authorization(false);">
 		</div>
 	</div>
 	<div class="screen" id="admin">
@@ -31,11 +31,11 @@
 				<thead>
 					<tr>
 						<th>Номер</th>
-						<th>Товар</th>
-						<th>Артикул</th>
-						<th>Штрихкод</th>
-						<th>Количество</th>
-						<th>Цена</th>
+						<th data-info="name">Товар</th>
+						<th data-info="article">Артикул</th>
+						<th data-info="barcode">Штрихкод</th>
+						<th data-info="quantity">Количество</th>
+						<th data-info="price">Цена</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,13 +45,13 @@
 			<h3 class="description">
 				 <span class="act" data-for="stock">Добавить</span> товар
 			</h3>
-			<div class="request" data-for="stock" data-request="add">
-				<input type="text" class="input" placeholder="Товар">
-				<input type="text" class="input" placeholder="Артикул">
-				<input type="number" class="input" placeholder="Штрихкод" min="0">
-				<input type="number" class="input" placeholder="Количество" min="0">
-				<input type="number" class="input" placeholder="Цена" min="0">
-				<input type="button" class="button" value="Применить" onclick="dataRequest(0,'stock');">
+			<div class="request" data-request="add">
+				<input type="text" class="input" placeholder="Товар" oninput="this.setAttribute('data-name',this.value);">
+				<input type="text" class="input" placeholder="Артикул" oninput="this.setAttribute('data-article',this.value);">
+				<input type="number" class="input" placeholder="Штрихкод" min="0" oninput="this.setAttribute('data-barcode',this.value);">
+				<input type="number" class="input" placeholder="Количество" min="0" oninput="this.setAttribute('data-quantity',this.value);">
+				<input type="number" class="input" placeholder="Цена" min="0" oninput="this.setAttribute('data-price',this.value);">
+				<input type="button" class="button" value="Применить" onclick="obj.dataRequest(this,0,'stock');">
 			</div>
 			<h3 class="description">
 				Накладные
@@ -88,7 +88,7 @@
 						<th>Тип</th>
 						<th>Точка</th>
 						<th>Запрос / состояние</th>
-						<th>Накладная / состояние<th>
+						<th>Накладная / состояние</th>
 						<th>Статус</th>
 					</tr>
 				</thead>
