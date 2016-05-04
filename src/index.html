@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Дипломная работа. Виталий Привалов</title>
+</head>
+<body>
+	<div class="screen" id="login">
+		<div class="container">
+			<h2 class="description">
+				Вход
+			</h2>
+			<label for="userLogin">Логин</label>
+			<input type="text" class="input" id="userLogin" placeholder="Логин">
+			<label for="userPassword">Пароль</label>
+			<input type="password" class="input" id="userPassword" placeholder="Пароль">
+			<input type="button" class="button" value="Войти">
+		</div>
+	</div>
+	<div class="screen" id="admin">
+		<div class="container">
+			<h2>
+				Административная панель
+			</h2>
+			<h3 class="description">
+				Склад
+			</h3>
+			<table class="stock">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Товар</th>
+						<th>Артикул</th>
+						<th>Штрихкод</th>
+						<th>Количество</th>
+						<th>Цена</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				 <span class="act" data-for="stock">Добавить</span> товар
+			</h3>
+			<div class="request" data-for="stock" data-request="add">
+				<input type="text" class="input" placeholder="Товар">
+				<input type="text" class="input" placeholder="Артикул">
+				<input type="number" class="input" placeholder="Штрихкод" min="0">
+				<input type="number" class="input" placeholder="Количество" min="0">
+				<input type="number" class="input" placeholder="Цена" min="0">
+				<input type="button" class="button" value="Применить" onclick="dataRequest(0,'stock');">
+			</div>
+			<h3 class="description">
+				Накладные
+			</h3>
+			<table class="overhead">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Номер документа</th>
+						<th>Дата</th>
+						<th>Точка</th>
+						<th>Сборщик</th>
+						<th>Клиент</th>
+						<th>Номер запроса</th>
+						<th>Артикул товара [количество]</th>
+						<th>Цена</th>
+						<th>Состояние</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				Пользователи
+			</h3>
+			<table class="users">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Ф.И.О</th>
+						<th>Логин</th>
+						<th>Пароль</th>
+						<th>Тип</th>
+						<th>Точка</th>
+						<th>Запрос / состояние</th>
+						<th>Накладная / состояние<th>
+						<th>Статус</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				 <span class="act" data-for="users">Добавить</span> пользователя
+			</h3>
+			<div class="request" data-for="stock" data-request="add">
+				<input type="text" class="input" placeholder="Ф.И.О">
+				<input type="text" class="input" placeholder="Логин">
+				<input type="number" class="text" placeholder="Пароль">
+				<input type="number" class="number" placeholder="Тип" min="0">
+				<input type="number" class="text" placeholder="Точка">
+				<input type="button" value="Применить" onclick="dataRequest(0,'users');">
+			</div>
+			<h3 class="description">
+				Запросы
+			</h3>
+			<table class="requests">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Идентификатор запроса</th>
+						<th>Точка</th>
+						<th>Отправитель</th>
+						<th>Получатель</th>
+						<th>Запрос</th>
+						<th>Статус</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				 <span class="act" data-for="requests">Добавить</span> запрос
+			</h3>
+			<div class="request" data-for="stock" data-request="add">
+				<input type="text" placeholder="Товар">
+				<input type="text" placeholder="Артикул">
+				<input type="number" placeholder="Штрихкод" min="0">
+				<input type="number" placeholder="Количество" min="0">
+				<input type="number" placeholder="Цена" min="0">
+				<input type="button" value="Применить" onclick="dataRequest(0,'requests');">
+			</div>
+		</div>
+	</div>
+	<div class="screen" id="picker">
+		<div class="container">
+			<h2>Панель сборщика</h2>
+			<h3 class="description">
+				Запросы
+			</h3>
+			<table class="requests">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Идентификатор запроса</th>
+						<th>Точка</th>
+						<th>Отправитель</th>
+						<th>Получатель</th>
+						<th>Запрос</th>
+						<th>Статус</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				Ваши накладные
+			</h3>
+			<table class="overhead">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Номер документа</th>
+						<th>Дата</th>
+						<th>Точка</th>
+						<th>Сборщик</th>
+						<th>Клиент</th>
+						<th>Номер запроса</th>
+						<th>Артикул товара [количество]</th>
+						<th>Цена</th>
+						<th>Состояние</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				 <span class="act" data-for="overhead">Добавить</span> накладную
+			</h3>
+			<div class="request" data-for="overhead" data-request="add">
+				<h4 class="description">
+					Накладная: <span class="name"></span>
+				</h4>
+				<h5 class="description">
+					Запрос покупателя
+				</h5>
+				<table class="stock">
+					<thead>
+						<tr>
+							<th>Продукт</th>
+							<th>Штрихкод</th>
+							<th>Требуется</th>
+							<th>На складе</th>
+							<th>Просканированно</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+				<h5 class="description">
+					История сканирования
+				</h5>
+				<table class="barcodes">
+					<thead>
+						<tr>
+							<th>Продукт</th>
+							<th>Штрихкод</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+				<input type="number" placeholder="Штрихкод">
+				<input type="button" value="Применить" onclick="dataRequest(1,'overhead');">
+			</div>
+		</div>
+	</div>
+	<div class="screen" id="client">
+		<div class="container">
+			<h2 class="description">Покупатель</h2>
+			<h3 class="description">
+				Товары
+			</h3>
+			<table class="stock">
+				<thead>
+					<tr>
+						<th>Товар</th>
+						<th>Артикул</th>
+						<th>Количество на складе</th>
+						<th>Корзина</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h3 class="description">
+				Корзина
+			</h3>
+			<table class="card">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Товар</th>
+						<th>Количество</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<h4 class="description">
+				Итого: <span class="sum">0</span>
+			</h4>
+			<h3 class="description">
+				 <span class="act" data-for="overhead">Оформить</span> заказ
+			</h3>
+			<div class="request" data-for="stock" data-request="add">
+				<input type="button" value="Применить" onclick="dataRequest(2,'stock');">
+			</div>
+			<h3 class="descpription">
+				Ваши заказы
+			</h3>
+			<table class="requests">
+				<thead>
+					<tr>
+						<th>Номер</th>
+						<th>Номер документа</th>
+						<th>Сумма</th>
+						<th>Статус</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
