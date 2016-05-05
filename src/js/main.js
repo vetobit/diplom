@@ -64,31 +64,45 @@ var obj={                                                                       
       });
     }
   },
-  setData:function(product){                                                          // Функция записи нового товара в объект с товарами(принимает объект нового товара)
-    obj.data.push(product);                                                           // Дописываем в товары товар который пришёл в функцию
-    obj.rewriteFile(obj.data,"json/products.json");                                   // Вызываем функцию которая перезапишет файл на сервере, передадим туда объет с товарами и путь до файла
+  setObj:function(mainObj,newObj,url){                                                // Функция записи нового товара в объект с товарами(принимает объект нового товара)
+    obj[mainObj].push(newObj);                                                            // Дописываем в товары товар который пришёл в функцию
+    obj.rewriteFile(obj[mainObj],url);                                                // Вызываем функцию которая перезапишет файл на сервере, передадим туда объет с товарами и путь до файла
   },
-  viewData:function(table,objProduct){
-    if(objProduct!="all"){
-      products=[objProduct];
+  rewriteObj:function(mainObj,oldObject,newObj,table,url){
+    var tr=table.querySelectorAll("tr")[oldObject],
+        tdAll=tr.querySelectorAll("td");
+
+    obj[mainObj][oldObject]=newObj;
+    obj.rewriteFile(obj[mainObj],url);
+    for(td in tdAll){
+      td=tdAll[td];
+      if(td.innerHTML!=obj[mainObj][oldObject][td.getAttribute("data-info")]){
+        td.innerHTML=obj[mainObj][oldObject][td.getAttribute("data-info")];
+      } 
     }
-    else{
-      products=obj.data;
-      table.innerHTML="";
+  },
+  viewObj:function(mainObj,table,newObj){                                             // Функция вывода продуктов в таблицу (принимает таблицу в которую будет вывод и объект вывода(если надо дописать в таблицу))
+    if(newObj!="all"){                                                                // Если объект вывода является объектом, то
+      var objs=[newObj];                                                              // Создадим массив продуктов с одним продуктом, который пришёл
+    } 
+    else{                                                                             // Если объект выводв является строкой all, то
+      var objs=obj[mainObj];                                                          // Массив с продкутами равен объекту со всеми продуктами
+      table.innerHTML="";                                                             // Очищаем таблицу
     }
-    products.map(function(product){
-      var tr = document.createElement("tr"),
-          td = document.createElement("td");
-      td.innerHTML=table.childElementCount - 1;
-      tr.appendChild(td);
-      keys = Object.keys(product);  
-      keys.map(function(key){
-        var td=document.createElement("td");
-        td.innerHTML=product[key];
-        td.setAttribute("data-info",key);
-        tr.appendChild(td);
+    objs.map(function(item){                                                          // Для каждого продукта из нового массива продуктов объявляем функцию, принимающую его
+      var tr = document.createElement("tr"),                                          // Объявляем новый элемент страницы - строку
+          td = document.createElement("td"),                                          // Объявляем новый элемент страницы - ячейку
+          keys = Object.keys(item);                                                   // Создаём массив всех ключей свойств продукта
+
+      td.innerHTML=table.childElementCount;                                           // В ячейку записываем количество элементов в таблице
+      tr.appendChild(td);                                                             // В строку записываем ячейку (Будет номером строки)
+      keys.map(function(key){                                                         // Прогоняем каждый ключ через функцию, которая его принимает
+        var td=document.createElement("td");                                          // Объявляем новую ячейку
+        td.innerHTML=item[key];                                                       // Пишем в неё значение свойства продукта по ключу
+        td.setAttribute("data-info",key);                                             // Добавляем к ячейке атрибут в который записываем имя ключа (для дальнейшей ориентации)
+        tr.appendChild(td);                                                           // Добавляем в строку ячейку
       });
-      table.appendChild(tr);
+      table.appendChild(tr);                                                          // Добавляем в таблицу строку
     });
   },
   getOverheads:function(responseText){                                                // Функция получения накладных из файла (принимает текст из файла)
@@ -112,47 +126,54 @@ var obj={                                                                       
     }
   },
   dataRequest:function(elem,dataKey, tableClass){                                     // Функция отвечающая сбор данных с форм и выполняет соответствующие задачи. Принимает ключь таблицы в которую записать изменения, элемент из которого происходил вызов и таблицу для вывода результата
-    var parent=elem.parentNode,
-        table=parent.parentNode.querySelector("."+tableClass),
-        ths=table.querySelectorAll("th"),
-        tableBody=table.querySelector("tbody"),
-        request=parent.getAttribute("data-request"),
-        dataObj=[
-          "Data",
-          "Users",
-          "Overheads",
-          "Request"
+    var parent=elem.parentNode,                                                       // Объявляем сслыку на родительский элемент элемента, который вызвал функцию
+        table=parent.parentNode.querySelector("."+tableClass),                        // Объявляем ссылку на таблицу 
+        ths=table.querySelectorAll("th"),                                             // Объявляем ссылку на все элементы th в таблице
+        tableBody=table.querySelector("tbody"),                                       // Объявляем ссылку на тело таблицы
+        request=parent.getAttribute("data-request"),                                  // Объявляем переменную которая будет хранить тип запроса (запись, перезапись)
+        dataObj=[                                                                     // Объявляем части запроса к функции, в которых храниться название объекта редактирования
+          "data",                                                                     // Для товаров
+          "users",                                                                    // Для пользователей
+          "overheads",                                                                // Для накладных
+          "request"                                                                   // Для запросов
         ],
-        dataPref=[
-          "set",
-          "rewrite",
-          "view"
+        dataUrls=[
+          "json/products.json",
+          "json/users.json",
+          "json/overheads.json",
+          "json/requests.json"
         ],
-        string="",
-        data={};
+        dataPref=[                                                                    // Объявляем префиксы для первой части запроса к функции
+          "set",                                                                      // Добавить
+          "rewrite",                                                                  // Переписать
+          "view"                                                                      // Отобразить
+        ],
+        string="",                                                                    // Объявляем собирательную переменную
+        data={};                                                                      // Объявляем объект в котором будет сформирован объект из информации форм
 
-    for(th in ths){
-      th=ths[th];
-      if(typeof(th)=="object" && th.getAttribute("data-info")){
-        data[th.getAttribute("data-info")]="";
+    for(var th in ths){                                                               // Для каждого элемента th делаем следующее
+      th=ths[th];                                                                     // Переписываем переменную th, так чтобы она содержала объект заголовочной ячейки таблицы
+      if(typeof(th)=="object" && th.getAttribute("data-info")){                       // Если тип th будет объектом и он имеет аттрибут data-info (содержит ключ свойства)
+        data[th.getAttribute("data-info")]="";                                        // Тогда запишем в локальную дату свойство, именем которого ивляется значение атрибута (свойство объекта)
       }
     }
-    if(request=="add"){
-      for(key in data){
-        var input = parent.querySelectorAll("input[data-"+key+"]");
-        data[key]=input[0].value;
-        input[0].removeAttribute("data-"+key);
-        input[0].value="";
-      }
-      request=dataPref[0]+dataObj[dataKey];
-      obj[request](data);
-      request=dataPref[2]+dataObj[dataKey];
-      obj[request](table,data);
+    for(var key in data){                                                           // Для каждого свойства из локального объекта выполнем следущее
+      var input = parent.querySelectorAll("input[data-"+key+"]");                   // Сформируем запрос ко всем элементам форм, которые имеют атрибут data-"значение ключа свойства"
+      data[key]=input[0].value;                                                     // Запишем в свойство по ключу локального объета значение элемента формы
+      input[0].removeAttribute("data-"+key);                                        // Удалим из формы атрибут
+      input[0].value="";                                                            // Удалим из формы значение
+    } 
+    if(request=="add"){ 
+      request=dataPref[0]+"Obj";                                                      // Перепишем запрос на кастомный, который сложит префикс на добавление и объект редактирования
+      obj[request](dataObj[dataKey],data,dataUrls[dataKey]);                          // Обратимся к функции главного объета для записи в хранилище нового объекта
     }
     else{
       if(request=="rewrite"){
-
+        request=dataPref[1]+"Obj";
+        obj[request](dataObj[dataKey],elem.getAttribute("data-old"),data,tableBody,dataUrls[dataKey]);
       }
     }
+    request=dataPref[2]+"Obj";                                                      // Перепишем запрос на кастомный, который сложит префикс на вывод информации и объект редактирования
+    obj[request](dataObj[dataKey],tableBody,data);                                  // Обратимся к функции главного объекта для отображения информации в таблице (Отправим таблицу и локальный объект)
   }
 };
