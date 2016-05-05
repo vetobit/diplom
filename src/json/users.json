@@ -21,6 +21,7 @@
 		"name":"Паршенцев Владислав Аслексеевич",
 		"point":"point 1",
 		"status":0,
-		"rights":2
+		"rights":2,
+		"card":[]
 	}
 ]
