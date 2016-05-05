@@ -27,7 +27,7 @@
 			<h3 class="description">
 				Склад
 			</h3>
-			<table class="stock">
+			<table class="stock" data-obj="data">
 				<thead>
 					<tr>
 						<th>Номер</th>
@@ -45,18 +45,18 @@
 			<h3 class="description">
 				 <span class="act" data-for="stock">Добавить</span> товар
 			</h3>
-			<div class="request" data-for="stok" data-request="add">
-				<input type="text" class="input" placeholder="Товар" oninput="this.setAttribute('data-name',this.value);">
-				<input type="text" class="input" placeholder="Артикул" oninput="this.setAttribute('data-article',this.value);">
-				<input type="number" class="input" placeholder="Штрихкод" min="0" oninput="this.setAttribute('data-barcode',this.value);">
-				<input type="number" class="input" placeholder="Количество" min="0" oninput="this.setAttribute('data-quantity',this.value);">
-				<input type="number" class="input" placeholder="Цена" min="0" oninput="this.setAttribute('data-price',this.value);">
+			<div class="request" data-for="stock" data-request="add">
+				<input type="text" class="input" placeholder="Товар" data-name="null" oninput="this.setAttribute('data-name',this.value);">
+				<input type="text" class="input" placeholder="Артикул" data-article="null" oninput="this.setAttribute('data-article',this.value);">
+				<input type="number" class="input" placeholder="Штрихкод" data-barcode="null" min="0" oninput="this.setAttribute('data-barcode',this.value);">
+				<input type="number" class="input" placeholder="Количество" data-quantity="null" min="0" oninput="this.setAttribute('data-quantity',this.value);">
+				<input type="number" class="input" placeholder="Цена" min="0" data-price="null" oninput="this.setAttribute('data-price',this.value);">
 				<input type="button" class="button" value="Применить" onclick="obj.dataRequest(this,0,'stock');">
 			</div>
 			<h3 class="description">
 				Накладные
 			</h3>
-			<table class="overhead">
+			<table class="overhead" data-obj="overheads">
 				<thead>
 					<tr>
 						<th>Номер</th>
@@ -78,18 +78,18 @@
 			<h3 class="description">
 				Пользователи
 			</h3>
-			<table class="users">
+			<table class="users" data-obj="users">
 				<thead>
 					<tr>
 						<th>Номер</th>
-						<th>Ф.И.О</th>
-						<th>Логин</th>
-						<th>Пароль</th>
-						<th>Тип</th>
-						<th>Точка</th>
-						<th>Запрос / состояние</th>
-						<th>Накладная / состояние</th>
-						<th>Статус</th>
+						<th data-info="name">Ф.И.О</th>
+						<th data-info="login">Логин</th>
+						<th data-info="password">Пароль</th>
+						<th data-info="rights">Тип</th>
+						<th data-info="point">Точка</th>
+						<!-- <th>Запрос / состояние</th>
+						<th>Накладная / состояние</th> -->
+						<th data-info="status">Статус</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -99,18 +99,18 @@
 			<h3 class="description">
 				 <span class="act" data-for="users">Добавить</span> пользователя
 			</h3>
-			<div class="request" data-for="stock" data-request="add">
-				<input type="text" class="input" placeholder="Ф.И.О">
-				<input type="text" class="input" placeholder="Логин">
-				<input type="number" class="text" placeholder="Пароль">
-				<input type="number" class="number" placeholder="Тип" min="0">
-				<input type="number" class="text" placeholder="Точка">
-				<input type="button" value="Применить" onclick="dataRequest(0,'users');">
+			<div class="request" data-for="users" data-request="add">
+				<input type="text" class="input" placeholder="Ф.И.О" data-name="null" oninput="this.setAttribute('data-name',this.value);">
+				<input type="text" class="input" placeholder="Логин" data-login="null" oninput="this.setAttribute('data-login',this.value);">
+				<input type="text" class="input" placeholder="Пароль" data-password="null" oninput="this.setAttribute('data-password',this.value);">
+				<input type="number" class="input" placeholder="Тип" min="0" data-rights="null" oninput="this.setAttribute('data-rights',this.value);">
+				<input type="text" class="input" placeholder="Точка" data-point="null" oninput="this.setAttribute('data-point',this.value);">
+				<input type="button" class="button" value="Применить" onclick="obj.dataRequest(this,1,'users');">
 			</div>
 			<h3 class="description">
 				Запросы
 			</h3>
-			<table class="requests">
+			<table class="requests" data-obj="requests">
 				<thead>
 					<tr>
 						<th>Номер</th>
@@ -129,7 +129,7 @@
 			<h3 class="description">
 				 <span class="act" data-for="requests">Добавить</span> запрос
 			</h3>
-			<div class="request" data-for="stock" data-request="add">
+			<div class="request" data-for="requests" data-request="add">
 				<input type="text" placeholder="Товар">
 				<input type="text" placeholder="Артикул">
 				<input type="number" placeholder="Штрихкод" min="0">
@@ -145,16 +145,12 @@
 			<h3 class="description">
 				Запросы
 			</h3>
-			<table class="requests">
+			<table class="requests" data-obj="requests">
 				<thead>
 					<tr>
 						<th>Номер</th>
-						<th>Идентификатор запроса</th>
-						<th>Точка</th>
-						<th>Отправитель</th>
-						<th>Получатель</th>
-						<th>Запрос</th>
-						<th>Статус</th>
+						<th data-info="user">Отправитель</th>
+						<th data-info="body">Запрос</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -232,13 +228,14 @@
 			<h3 class="description">
 				Товары
 			</h3>
-			<table class="stock">
+			<table class="stock" data-obj="data">
 				<thead>
 					<tr>
-						<th>Товар</th>
-						<th>Артикул</th>
-						<th>Количество на складе</th>
-						<th>Корзина</th>
+						<th>Номер</th>
+						<th data-info="name">Товар</th>
+						<th data-info="article">Артикул</th>
+						<th data-info="quantity">Количество на складе</th>
+						<th data-info="price">Цена за штуку</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -246,14 +243,22 @@
 				</tbody>
 			</table>
 			<h3 class="description">
+				 <span class="act" data-for="card">Добавить</span> товар в корзину
+			</h3>
+			<div class="request" data-for="stock" data-request="add">
+				<input type="text" class="input" placeholder="Товар" data-name="null" oninput="this.setAttribute('data-name',this.value);">
+				<input type="number" class="input" placeholder="Количество" min="0" data-quantity="null" oninput="this.setAttribute('data-quantity',this.value);">
+				<input type="button" class="button" value="Применить" onclick="obj.addToCard(this);">
+			</div>
+			<h3 class="description">
 				Корзина
 			</h3>
-			<table class="card">
+			<table class="card" data-obj="card">
 				<thead>
 					<tr>
 						<th>Номер</th>
-						<th>Товар</th>
-						<th>Количество</th>
+						<th data-info="name">Товар</th>
+						<th data-info="quantity">Количество</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -266,9 +271,7 @@
 			<h3 class="description">
 				 <span class="act" data-for="overhead">Оформить</span> заказ
 			</h3>
-			<div class="request" data-for="stock" data-request="add">
-				<input type="button" value="Применить" onclick="dataRequest(2,'stock');">
-			</div>
+			<input type="button" value="Применить" onclick="obj.creareNewRequest();">
 			<h3 class="descpription">
 				Ваши заказы
 			</h3>
